@@ -1,59 +1,31 @@
-// 
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
-
-
-// import { Routes, Route } from "react-router-dom";
-
-// import Navbar from "./Code2cash/Navbar";
-// import Testimonials from "./Code2cash/Testimonials";
-// import Footer from "./Code2cash/Footer";
-
-// import Home from "./Code2cash/Home";
-// import AboutPage from "./Code2cash/AboutPage";
-// import ServicesPage from "./Code2cash/ServicesPage";
-// import CareersPage from "./Code2cash/CareersPage";
-// import ContactPage from "./Code2cash/ContactPage";
-
-
-// function App() {
-//   return (
-//     <>
-//       <Navbar />
-
-//       <Routes>
-//         <Route path="/" element={<Home />} />
-//         <Route path = "/testimonials" element = {<Testimonials />} />
-//         <Route path="/about" element={<AboutPage />} />
-//         <Route path="/services" element={<ServicesPage />} />
-//         <Route path="/careers" element={<CareersPage />} />
-//         <Route path="/contact" element={<ContactPage />} />
-//       </Routes>
-
-//       <Footer />
-//     </>
-//   );
-// }
-
-// export default App;
-import { Routes, Route, Navigate } from "react-router-dom";
-//import Navbar from "./Routers/Navbar";
-// import Home from "./Routers/Home";
-// import College from "./Routers/college"
-// import Department from "./Routers/Pages/Department"
-// import Course from "./Routers/Pages/course"
-// import Students from "./Routers/Pages/StudentsDetail"
-// import About from "./Routers/about";
-// import Login from "./Routers/login";
-// import PageNotFound from "./Routers/PageNotFound";
-import Dashboard from "./Github/Dashboard"
+import Login from "./ProtectedRouting/Login";
+import Dashboard, { DashboardOverview } from "./ProtectedRouting/Dashboard";
+import ProtectedRoute from "./ProtectedRouting/ProtectedRoute";
+import Courses from "./ProtectedRouting/Courses";
+import Profile from "./ProtectedRouting/Profile";
+import Settings from "./ProtectedRouting/Setting";
 
 function App() {
   return (
-    <div>
+    <BrowserRouter>
       <Routes>
-        <Route path="/github/:username" element={<Dashboard />} />
+        <Route path="/login" element={<Login />} />
+
+        <Route element={<ProtectedRoute />}>
+          <Route path="/dashboard" element={<Dashboard />}>
+            <Route index element={<DashboardOverview />} />
+            <Route path="courses" element={<Courses />} />
+            <Route path="profile" element={<Profile />} />
+            <Route path="settings" element={<Settings />} />
+          </Route>
+        </Route>
+
+        <Route path="/" element={<Navigate to="/dashboard" replace />} />
+        <Route path="*" element={<Navigate to="/dashboard" replace />} />
       </Routes>
-    </div>
+    </BrowserRouter>
   );
 }
 
